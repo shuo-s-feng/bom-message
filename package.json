@@ -1,6 +1,6 @@
 {
   "name": "bom-message",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A TypeScript library for window message communication",
   "keywords": [
     "bom",

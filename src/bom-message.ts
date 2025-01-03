@@ -94,7 +94,11 @@ export type MessageHandler<Payload = unknown, Response = unknown> = (
  * Structure of messages passed between entities
  * @template Payload - Type of the message payload
  */
-export interface MessageData<Payload = unknown> {
+interface MessageData<Payload = unknown> {
+  /**
+   * The protocol used to send the message
+   */
+  via: "bom-message";
   type: "request" | "response";
   messageId: string;
   from: string; // Sender entity’s ID
@@ -108,10 +112,13 @@ export interface MessageData<Payload = unknown> {
  * @param data - Object to verify
  * @returns boolean indicating if the object is valid MessageData
  */
-export const isMessageData = (data: unknown): data is MessageData => {
+const isMessageData = (data: unknown): data is MessageData => {
   return (
     typeof data === "object" &&
     data !== null &&
+    "via" in data &&
+    typeof data.via === "string" &&
+    data.via === "bom-message" &&
     "type" in data &&
     typeof data.type === "string" &&
     ["request", "response"].includes(data.type) &&
@@ -409,6 +416,7 @@ export class Entity {
       this.pendingRequests.set(messageId, resolve);
 
       const data: MessageData = {
+        via: "bom-message",
         type: "request",
         messageId,
         from: this.id,
@@ -451,6 +459,7 @@ export class Entity {
         handler({ id: from }, payload, (response) => {
           // Send a response back to the sender
           const responseData: MessageData = {
+            via: "bom-message",
             type: "response",
             messageId, // same ID for correlation
             from: this.id,
