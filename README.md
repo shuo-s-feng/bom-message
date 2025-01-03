@@ -1,6 +1,11 @@
-# bom-message
+<h1 align="center">bom-message</h1>
 
-A TypeScript library for cross-window message communication.
+<div align="center">
+  A TypeScript library for cross-window message communication, designed by
+  <a href="https://gravatar.com/shuosfeng/">Shuo Feng</a>
+</div>
+
+<br />
 
 ## Installation
 
@@ -52,16 +57,16 @@ entity1.sendMessage("2", "Hello").then((response) => {
 
 #### Methods
 
-| Method                      | Parameters                                                                                                                 | Return Type           | Description                                                   |
-| --------------------------- | -------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------------------------- |
-| `Entity.init()`             | `config?: { sourceEntityIds?: string[], enableAutoCustomEmitter?: boolean, globalEmitterKey?: string, verbose?: boolean }` | `void`                | Initialize the Entity system. Must be called first.           |
-| `Entity.getById()`          | `id: string`                                                                                                               | `Entity \| undefined` | Retrieve an entity instance by its ID.                        |
-| `Entity.destroy()`          | none                                                                                                                       | `void`                | Clean up all entities and event listeners.                    |
-| `new Entity()`              | `id: string, options?: { verbose?: boolean, errorOnDuplicate?: boolean }`                                                  | `Entity`              | Create new entity instance.                                   |
-| `entity.destroy()`          | none                                                                                                                       | `void`                | Remove this specific entity instance.                         |
-| `entity.subscribeMessage()` | `handler: (sender: { id: string }, payload: unknown, reply: (response?: unknown) => void) => void`                         | `() => void`          | Subscribe to incoming messages. Returns unsubscribe function. |
-| `entity.sendMessage()`      | `targetId: string, message: unknown`                                                                                       | `Promise<unknown>`    | Send message to another entity. Returns promise with reply.   |
+| Method                      | Description                                                   | Parameters                                                                                                                 | Return Type           |
+| --------------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| `Entity.init()`             | Initialize the Entity system. Must be called first.           | `config?: { sourceEntityIds?: string[], enableAutoCustomEmitter?: boolean, globalEmitterKey?: string, verbose?: boolean }` | `void`                |
+| `Entity.getById()`          | Retrieve an entity instance by its ID.                        | `id: string`                                                                                                               | `Entity \| undefined` |
+| `Entity.destroy()`          | Clean up all entities and event listeners.                    | none                                                                                                                       | `void`                |
+| `new Entity()`              | Create new entity instance.                                   | `id: string, options?: { verbose?: boolean, errorOnDuplicate?: boolean }`                                                  | `Entity`              |
+| `entity.destroy()`          | Remove this specific entity instance.                         | none                                                                                                                       | `void`                |
+| `entity.subscribeMessage()` | Subscribe to incoming messages. Returns unsubscribe function. | `handler: (sender: { id: string }, payload: unknown, reply: (response?: unknown) => void) => void`                         | `() => void`          |
+| `entity.sendMessage()`      | Send message to another entity. Returns promise with reply.   | `targetId: string, message: unknown`                                                                                       | `Promise<unknown>`    |
 
 ## License
 
-[MIT](LICENSE)
+This library is [MIT](LICENSE) licensed.
