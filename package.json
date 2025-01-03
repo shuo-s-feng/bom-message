@@ -1,7 +1,7 @@
 {
   "name": "bom-message",
-  "version": "0.0.3",
-  "description": "A TypeScript library for window message communication",
+  "version": "0.0.7",
+  "description": "A TypeScript library for cross-window message communication",
   "keywords": [
     "bom",
     "window",
@@ -14,19 +14,26 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "(rm -rf ./dist || true) && tsc",
     "prepare": "yarn build",
     "link-pkg": "npm link && npm link bom-message",
-    "run-ts-example": "node --loader ts-node/esm examples/ts-example.ts",
+    "run-ts-example": "tsx examples/ts-example.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shuo-s-feng/bom-message.git"
   },
   "author": "Shuo Feng",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shuo-s-feng/bom-message/issues"
+  },
+  "homepage": "https://github.com/shuo-s-feng/bom-message#readme",
   "private": false,
-  "type": "module",
   "devDependencies": {
     "@types/node": "^22.10.2",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   }
 }

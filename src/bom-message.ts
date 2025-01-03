@@ -60,8 +60,8 @@ const createMessageEmitter = (props?: {
     throw new Error("No valid message emitter found");
   }
 
-  const emitter = globalThis[globalEmitterKey] ?? new EventEmitter();
-  globalThis[globalEmitterKey] = emitter;
+  const emitter = (globalThis as any)[globalEmitterKey] ?? new EventEmitter();
+  (globalThis as any)[globalEmitterKey] = emitter;
 
   return {
     addEventListener: (type: string, listener: (event: unknown) => void) => {
@@ -253,22 +253,29 @@ export class Entity {
    * - Messages for non-existent entities are ignored
    * - When verbose logging is enabled, all routing decisions are logged
    */
-  private static onWindowMessage(event: MessageEvent) {
+  private static onWindowMessage = (event: unknown) => {
+    // Type guard for MessageEvent
+    if (!event || typeof event !== "object" || !("data" in event)) {
+      return;
+    }
+
+    const messageEvent = event as MessageEvent;
+
     // Validate event data
-    if (!event.data || !isMessageData(event.data)) {
+    if (!messageEvent.data || !isMessageData(messageEvent.data)) {
       return;
     }
 
     // Ignore message from source entity
-    if (Entity.sourceEntityIdSet.has(event.data.from)) {
+    if (Entity.sourceEntityIdSet.has(messageEvent.data.from)) {
       return;
     }
 
     if (Entity.globalVerbose) {
-      console.log("[Entity.onWindowMessage] Event received", event);
+      console.log("[Entity.onWindowMessage] Event received", messageEvent);
     }
 
-    const { data } = event;
+    const { data } = messageEvent;
 
     // Find the target Entity instance
     const targetEntity = Entity.getById(data.to);
@@ -290,7 +297,7 @@ export class Entity {
       );
     }
     targetEntity.handleIncomingMessage(data);
-  }
+  };
 
   /**
    * Retrieve an Entity instance by its ID

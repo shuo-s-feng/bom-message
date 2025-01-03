@@ -1,18 +1,53 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "target": "ESNext",
-    "sourceMap": true,
-    "outDir": "dist",
-    "esModuleInterop": true,
+    // ======================
+    // Core Options
+    // ======================
+    // Generates code that uses ES2017 features (e.g., async/await)
+    // No need for polyfill if the environment is modern enough.
+    "target": "ES2017",
+
+    // Use CommonJS if you’re shipping a Node library
+    // or "ESNext" if you want an ESM-only package.
+    "module": "CommonJS",
+
+    // Node-style resolution
+    "moduleResolution": "node",
+
+    // Includes ES2017 declarations (Promise, etc.)
+    // Add "DOM" if you need browser APIs, otherwise omit it.
+    "lib": ["ES2017", "DOM"],
+
+    // Where the compiled .js files go
+    "outDir": "./dist",
+
+    // ======================
+    // Declarations & Maps
+    // ======================
+    // Emit .d.ts files (for library distribution)
     "declaration": true,
-    "declarationMap": true
-  },
-  "ts-node": {
-    "esm": true,
-    "experimentalSpecifierResolution": "node"
+    // If you want them in a separate directory, you can set "declarationDir"
+    // e.g. "declarationDir": "./dist/types"
+
+    // Emit source maps (helpful for debugging)
+    "sourceMap": true,
+
+    // ======================
+    // Strictness & Interop
+    // ======================
+    "strict": true,
+    "esModuleInterop": true,
+
+    // Optional extra strict flags
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+
+    // Skip type-checking .d.ts files in node_modules
+    "skipLibCheck": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules"]
 }
