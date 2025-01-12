@@ -1,13 +1,9 @@
-<h1 align="center">bom-message</h1>
+# bom-message
 
-[![codecov](https://codecov.io/gh/shuo-s-feng/bom-message/branch/main/graph/badge.svg)](https://codecov.io/gh/shuo-s-feng/bom-message) [![Test](https://github.com/shuo-s-feng/bom-message/actions/workflows/test.yml/badge.svg)](https://github.com/shuo-s-feng/bom-message/actions/workflows/test.yml)
+[![Test](https://github.com/shuo-s-feng/bom-message/actions/workflows/test.yml/badge.svg)](https://github.com/shuo-s-feng/bom-message/actions/workflows/test.yml) [![codecov](https://codecov.io/gh/shuo-s-feng/bom-message/branch/main/graph/badge.svg)](https://codecov.io/gh/shuo-s-feng/bom-message)
 
-<div align="center">
-  A TypeScript library for cross-window message communication, designed by
-  <a href="https://gravatar.com/shuosfeng/">Shuo Feng</a>
-</div>
-
-<br />
+A TypeScript library for cross-window message communication, designed by
+<a href="https://gravatar.com/shuosfeng/">Shuo Feng</a>.
 
 ## Installation
 
