@@ -1,13 +1,11 @@
 <h1 align="center">bom-message</h1>
 
+[![codecov](https://codecov.io/gh/shuo-s-feng/bom-message/branch/main/graph/badge.svg)](https://codecov.io/gh/shuo-s-feng/bom-message) [![Test](https://github.com/shuo-s-feng/bom-message/actions/workflows/test.yml/badge.svg)](https://github.com/shuo-s-feng/bom-message/actions/workflows/test.yml)
+
 <div align="center">
   A TypeScript library for cross-window message communication, designed by
   <a href="https://gravatar.com/shuosfeng/">Shuo Feng</a>
 </div>
-
-[![codecov](https://codecov.io/gh/shuo-s-feng/bom-message/branch/main/graph/badge.svg)](https://codecov.io/gh/shuo-s-feng/bom-message)
-
-[![Test](https://github.com/shuo-s-feng/bom-message/actions/workflows/test.yml/badge.svg)](https://github.com/shuo-s-feng/bom-message/actions/workflows/test.yml)
 
 <br />
 
@@ -74,3 +72,7 @@ entity1.sendMessage("2", "Hello").then((response) => {
 ## License
 
 This library is [MIT](LICENSE) licensed.
+
+[build-badge]: https://github.com/shuo-s-feng/bom-message/workflows/main/badge.svg
+[build]: https://github.com/shuo-s-feng/bom-message/actions
+[coverage-badge]: https://img.shields.io/codecov/c/github/shuo-s-feng/bom-message.svg
