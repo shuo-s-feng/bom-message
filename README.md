@@ -5,6 +5,10 @@
   <a href="https://gravatar.com/shuosfeng/">Shuo Feng</a>
 </div>
 
+[![codecov](https://codecov.io/gh/shuo-s-feng/bom-message/branch/main/graph/badge.svg)](https://codecov.io/gh/shuo-s-feng/bom-message)
+
+[![Test](https://github.com/shuo-s-feng/bom-message/actions/workflows/test.yml/badge.svg)](https://github.com/shuo-s-feng/bom-message/actions/workflows/test.yml)
+
 <br />
 
 ## Installation
