@@ -1,3 +1,4 @@
+import { decodeNestedFormData, encodeNestedFormData } from "./data-converters";
 import { MessageEventEmitter, createMessageEmitter } from "./event-emitter";
 
 /**
@@ -348,7 +349,7 @@ export class Entity {
    * ```
    */
   public sendMessage(targetId: string, message: unknown): Promise<unknown> {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       if (!Entity.getById(this.id)) {
         reject(new Error("Entity is destroyed"));
       }
@@ -362,7 +363,7 @@ export class Entity {
         messageId,
         from: this.id,
         to: targetId,
-        payload: message,
+        payload: await encodeNestedFormData(message),
         timestamp: Date.now(),
       };
 
@@ -381,7 +382,7 @@ export class Entity {
    * @internal
    * @param data - The message data to process
    */
-  private handleIncomingMessage(data: MessageData) {
+  private async handleIncomingMessage(data: MessageData) {
     if (data.from === this.id) {
       if (this.verbose) {
         console.log(`[Entity ${this.id}] Ignoring message from self:`, data);
@@ -396,31 +397,35 @@ export class Entity {
     if (data.type === "request") {
       // It's a request
       const { from, payload, messageId } = data;
-      this.messageHandlers.forEach((handler) => {
-        handler({ id: from }, payload, (response) => {
-          // Send a response back to the sender
-          const responseData: MessageData = {
-            via: "bom-message",
-            type: "response",
-            messageId, // same ID for correlation
-            from: this.id,
-            to: from,
-            payload: response,
-            timestamp: Date.now(),
-          };
+      this.messageHandlers.forEach(async (handler) => {
+        handler(
+          { id: from },
+          await decodeNestedFormData(payload),
+          async (response) => {
+            // Send a response back to the sender
+            const responseData: MessageData = {
+              via: "bom-message",
+              type: "response",
+              messageId, // same ID for correlation
+              from: this.id,
+              to: from,
+              payload: await encodeNestedFormData(response),
+              timestamp: Date.now(),
+            };
 
-          if (this.verbose) {
-            console.log(`[Entity ${this.id}] Replying with:`, responseData);
+            if (this.verbose) {
+              console.log(`[Entity ${this.id}] Replying with:`, responseData);
+            }
+
+            Entity.messageEmitter.postMessage(responseData, "*");
           }
-
-          Entity.messageEmitter.postMessage(responseData, "*");
-        });
+        );
       });
     } else if (data.type === "response") {
       // It's a response to our earlier request
       const resolver = this.pendingRequests.get(data.messageId);
       if (resolver) {
-        resolver(data.payload);
+        resolver(await decodeNestedFormData(data.payload));
         this.pendingRequests.delete(data.messageId);
 
         if (this.verbose) {

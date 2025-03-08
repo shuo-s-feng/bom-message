@@ -65,7 +65,7 @@ describe("Entity", () => {
   });
 
   describe("message handling", () => {
-    it("should handle incoming messages and trigger handlers", () => {
+    it("should handle incoming messages and trigger handlers", async () => {
       const entity = new Entity("receiver");
       const mockHandler = jest.fn();
 
@@ -88,6 +88,7 @@ describe("Entity", () => {
       const messageListener = (mockMessageEmitter.addEventListener as jest.Mock)
         .mock.calls[0][1];
       messageListener(mockMessage);
+      await new Promise((resolve) => setTimeout(resolve));
 
       expect(mockHandler).toHaveBeenCalledWith(
         { id: "sender" },
@@ -159,7 +160,7 @@ describe("Entity", () => {
   });
 
   describe("message subscription", () => {
-    it("should handle multiple subscribers", () => {
+    it("should handle multiple subscribers", async () => {
       const entity = new Entity("test");
       const handler1 = jest.fn();
       const handler2 = jest.fn();
@@ -182,6 +183,7 @@ describe("Entity", () => {
       const messageListener = (mockMessageEmitter.addEventListener as jest.Mock)
         .mock.calls[0][1];
       messageListener(message);
+      await new Promise((resolve) => setTimeout(resolve));
 
       expect(handler1).toHaveBeenCalled();
       expect(handler2).toHaveBeenCalled();
